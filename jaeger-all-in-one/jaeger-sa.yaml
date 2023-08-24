@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: jaeger-allinone
+  labels:
+    app.kubernetes.io/name: jaeger-allinone
+    app.kubernetes.io/component: all-in-one

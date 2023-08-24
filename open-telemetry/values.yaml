@@ -1,0 +1,31 @@
+mode: "deployment"
+image:
+  repository: registry:5000/otel/opentelemetry-collector-contrib
+  tag: "0.83.0"
+resources: {}
+nodeSelector: {}
+tolerations: []
+service:
+  enabled: true
+ingress:
+  enabled: false
+config:
+  # example: https://github.com/open-telemetry/opentelemetry-collector/blob/main/examples/k8s/otel-config.yaml
+  exporters:
+    jaeger:
+      endpoint: http://jaeger-allinone-collector:14250
+      tls:
+        insecure: true
+  receivers:
+    otlp:
+      protocols:
+        grpc:
+          endpoint: 0.0.0.0:4317
+        http:
+          endpoint: 0.0.0.0:4318
+  service:
+    pipelines:
+      traces:
+        receivers: [otlp]
+        processors: []
+        exporters: [jaeger]
